@@ -1,0 +1,159 @@
+{
+	"info": {
+		"_postman_id": "b267fcdd-d1d2-4286-a6a1-659c479e7478",
+		"name": "hiring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "procurar todos os discos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/discos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discos"
+					]
+				},
+				"description": "procurar todos discos"
+			},
+			"response": []
+		},
+		{
+			"name": "procurar disco por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/discos/3AySFrUjkzdd8VvQ7ajjCk",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"discos",
+						"3AySFrUjkzdd8VvQ7ajjCk"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "procurar por genero",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "realizar venda",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"discos\":[\n   {\n        \"id\": \"397yLdCylWx9zTgt2mqpxd\",\n        \"preco\": 85.11,\n        \"nome\": \"American Teen\",\n        \"genero\": \"pop\"\n    }]\n \t\n }\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/vendas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vendas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "procurar vendas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/vendas?dataInicial=01-02-1988&dataFinal=01-01-2020",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vendas"
+					],
+					"query": [
+						{
+							"key": "dataInicial",
+							"value": "01-02-1988"
+						},
+						{
+							"key": "dataFinal",
+							"value": "01-01-2020"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "procurar venda por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/vendas/3296dec4-1396-4e75-b19a-ee6c093f9d61",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"vendas",
+						"3296dec4-1396-4e75-b19a-ee6c093f9d61"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
