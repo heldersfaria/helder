@@ -1,9 +1,12 @@
 package com.hiring.helder.controllers;
 
+import com.hiring.helder.exceptions.CashBackException;
 import com.hiring.helder.exceptions.DiscoException;
+import com.hiring.helder.exceptions.DiscoVinilException;
 import com.hiring.helder.exceptions.VendaException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionFailedException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,7 +28,7 @@ public class HelderRestControllerAdvice {
     }
 
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler({BindException.class, ConversionFailedException.class, IllegalArgumentException.class, VendaException.class})
+    @ExceptionHandler({BindException.class, ConversionFailedException.class, IllegalArgumentException.class, VendaException.class, DiscoVinilException.class, CashBackException.class})
     public void handleValidationExceptions(final HttpServletRequest req, final Exception e) {
         logError(req, e);
     }
@@ -45,4 +48,6 @@ public class HelderRestControllerAdvice {
     private void logError(final HttpServletRequest req, final Throwable e) {
         log.error("Request " + String.valueOf(req.getRequestURL()) + "raised an exception : " + e.getClass().getName(), e);
     }
+
+
 }

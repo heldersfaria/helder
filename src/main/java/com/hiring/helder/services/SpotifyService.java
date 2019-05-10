@@ -11,6 +11,7 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.AlbumSimplified;
 import com.wrapper.spotify.model_objects.specification.Artist;
 import com.wrapper.spotify.model_objects.specification.Paging;
+import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,6 +31,9 @@ public class SpotifyService implements ApplicationListener<ContextRefreshedEvent
     private SpotifyApi spotifyApi;
 
     @Autowired
+    private ClientCredentialsRequest clientCredentialsRequest;
+
+    @Autowired
     private DiscoVinilService discoVinilService;
 
     private static final String qGenre = "genre:";
@@ -38,6 +42,9 @@ public class SpotifyService implements ApplicationListener<ContextRefreshedEvent
     private void buildDiscos(String genero) throws DiscoException {
 
         try {
+
+            spotifyApi.setAccessToken(clientCredentialsRequest.execute().getAccessToken());
+
             Paging<Artist> artistas = spotifyApi.searchItem(qGenre + genero, ARTIST.getType()).limit(50).build().execute().getArtists();
 
             JsonObject jsonArtistas = (JsonObject) new JsonParser().parse(new ObjectMapper().writeValueAsString(artistas));
@@ -78,7 +85,7 @@ public class SpotifyService implements ApplicationListener<ContextRefreshedEvent
             String nome = album.get("name").getAsString();
             String id = album.get("id").getAsString();
 
-            discoVinilService.salvarDisco(id, genero, nome);
+            discoVinilService.save(id, genero, nome);
 
             names.add(nome);
 

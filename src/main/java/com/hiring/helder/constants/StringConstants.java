@@ -16,4 +16,8 @@ public final class StringConstants {
 
     public static final String NOME = "nome";
     public static final String DATA = "data";
+
+    public static final String ID = "id";
+
+    public static final String DUMMY = "dummy";
 }

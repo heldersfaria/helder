@@ -1,5 +1,6 @@
 package com.hiring.helder.controllers;
 
+import com.hiring.helder.exceptions.DiscoVinilException;
 import com.hiring.helder.models.DiscoVinil;
 import com.hiring.helder.services.DiscoVinilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,14 @@ public class DiscosController {
 
     @GetMapping("/discos")
     public ResponseEntity<List<DiscoVinil>> find(@RequestParam(value = "genero", required = false) String genero,
-                                                 @RequestParam(value = "page", required = false, defaultValue = "0") String page,
+                                                 @RequestParam(value = "page", required = false, defaultValue = "1") String page,
                                                  @RequestParam(value = "size", required = false, defaultValue = "50") String size) {
-
-        List<DiscoVinil> lista = discoVinilService.find(genero, Integer.parseInt(page), Integer.parseInt(size));
+            List<DiscoVinil> lista = discoVinilService.find(genero, Integer.parseInt(size), Integer.parseInt(page));
         return new ResponseEntity<List<DiscoVinil>>(lista, OK);
     }
 
     @GetMapping("/discos/{id}")
-    public ResponseEntity<DiscoVinil> findById(@PathVariable("id") String id) {
+    public ResponseEntity<DiscoVinil> findById(@PathVariable("id") String id) throws DiscoVinilException {
         return new ResponseEntity<DiscoVinil>(discoVinilService.findById(id), OK);
     }
 }

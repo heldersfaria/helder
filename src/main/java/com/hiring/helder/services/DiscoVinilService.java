@@ -1,6 +1,7 @@
 package com.hiring.helder.services;
 
 import com.hiring.helder.Repositories.DiscoVinilRepository;
+import com.hiring.helder.exceptions.DiscoVinilException;
 import com.hiring.helder.models.DiscoVinil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,7 @@ public class DiscoVinilService {
     @Autowired
     private DiscoVinilRepository discoVinilRepository;
 
-    public List<DiscoVinil> find(String genero, Integer page, Integer size) {
+    public List<DiscoVinil> find(String genero, Integer size, Integer page) {
 
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(ASC, NOME));
 
@@ -32,11 +33,16 @@ public class DiscoVinilService {
         return discoVinilRepository.findAll(pageRequest).getContent();
     }
 
-    public DiscoVinil findById(String id) {
-        return discoVinilRepository.findById(id).orElse(null);
+    public DiscoVinil findById(String id) throws DiscoVinilException {
+
+        try {
+            return discoVinilRepository.findById(id).get();
+        } catch (Exception e) {
+            throw new DiscoVinilException("Disco não encontrado.", e);
+        }
     }
 
-    public DiscoVinil salvarDisco(String id, String genero, String nome) {
+    public DiscoVinil save(String id, String genero, String nome) {
 
         DiscoVinil discoVinil = new DiscoVinil();
         discoVinil.setId(id);

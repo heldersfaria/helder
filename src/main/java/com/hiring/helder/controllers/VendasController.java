@@ -1,6 +1,8 @@
 package com.hiring.helder.controllers;
 
 import com.hiring.helder.Resources.VendaResource;
+import com.hiring.helder.exceptions.CashBackException;
+import com.hiring.helder.exceptions.DiscoVinilException;
 import com.hiring.helder.exceptions.VendaException;
 import com.hiring.helder.models.Venda;
 import com.hiring.helder.services.VendaService;
@@ -34,13 +36,13 @@ public class VendasController {
     }
 
     @GetMapping(value = "/vendas/{id}")
-    public ResponseEntity<Venda> findById(@PathVariable("id") String id) {
+    public ResponseEntity<Venda> findById(@PathVariable("id") String id) throws VendaException {
         Venda venda = vendaService.findById(id);
         return new ResponseEntity<Venda>(venda, OK);
     }
 
     @PostMapping
-    public ResponseEntity<Venda> criarVenda(@RequestBody VendaResource venda) throws VendaException {
+    public ResponseEntity<Venda> criarVenda(@RequestBody VendaResource venda) throws VendaException, CashBackException, DiscoVinilException {
         return new ResponseEntity<Venda>(vendaService.processarVenda(venda), OK);
     }
 }

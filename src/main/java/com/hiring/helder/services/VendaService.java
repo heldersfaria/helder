@@ -2,6 +2,8 @@ package com.hiring.helder.services;
 
 import com.hiring.helder.Repositories.VendaRepository;
 import com.hiring.helder.Resources.VendaResource;
+import com.hiring.helder.exceptions.CashBackException;
+import com.hiring.helder.exceptions.DiscoVinilException;
 import com.hiring.helder.exceptions.VendaException;
 import com.hiring.helder.models.DiscoCashBack;
 import com.hiring.helder.models.DiscoVinil;
@@ -36,8 +38,13 @@ public class VendaService {
     @Autowired
     private DiscoCashBackService discoCashBackService;
 
-    public Venda findById(String id) {
-        return vendaRepository.findById(id).get();
+    public Venda findById(String id) throws VendaException {
+
+        try {
+            return vendaRepository.findById(id).get();
+        } catch (Exception e) {
+            throw new VendaException("Venda não encontrada.", e);
+        }
     }
 
     public List<Venda> find(LocalDate dateInicial, LocalDate dateFinal, Integer page, Integer size) {
@@ -45,7 +52,7 @@ public class VendaService {
         return vendaRepository.findByDataBetween(dateInicial, dateFinal, pageRequest);
     }
 
-    public Venda processarVenda(VendaResource vendaResource) throws VendaException {
+    public Venda processarVenda(VendaResource vendaResource) throws VendaException, CashBackException, DiscoVinilException {
 
         List<DiscoVinil> discos = vendaResource.getDiscos();
 
@@ -80,13 +87,13 @@ public class VendaService {
                 listaDiscosWithCashBack.add(discoCashBackService.save(discoCashBack));
             }
 
-            return salvarVenda(formatarDouble(valorTotalCashBack), listaDiscosWithCashBack);
+            return save(formatarDouble(valorTotalCashBack), listaDiscosWithCashBack);
         }
 
-        throw new VendaException();
+        throw new VendaException("Toda venda tem que possuir um disco");
     }
 
-    public Venda salvarVenda(Double valorTotalCashBack, List<DiscoCashBack> listaDiscosWithCashBack) {
+    private Venda save(Double valorTotalCashBack, List<DiscoCashBack> listaDiscosWithCashBack) {
         Venda venda = new Venda();
         venda.setId(randomUUID().toString());
         venda.setData(now());

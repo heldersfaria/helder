@@ -3,6 +3,7 @@ package com.hiring.helder.services;
 import com.hiring.helder.Repositories.CashBackRepository;
 import com.hiring.helder.constants.StringConstants;
 import com.hiring.helder.enums.GenerosEnum;
+import com.hiring.helder.exceptions.CashBackException;
 import com.hiring.helder.models.CashBack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,8 +59,13 @@ public class CashBackService implements ApplicationListener<ContextRefreshedEven
         cashBackRepository.save(cashBack);
     }
 
-    public CashBack findById(String id) {
-        return cashBackRepository.findById(id).get();
+    public CashBack findById(String id) throws CashBackException {
+
+        try {
+            return cashBackRepository.findById(id).get();
+        } catch (Exception e) {
+            throw new CashBackException("Valor de CashBack não encontrado", e);
+        }
     }
 
     @Override

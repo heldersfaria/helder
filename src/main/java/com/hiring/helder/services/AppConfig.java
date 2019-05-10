@@ -1,14 +1,13 @@
 package com.hiring.helder.services;
 
+import com.hiring.helder.exceptions.SpotifyApiException;
 import com.wrapper.spotify.SpotifyApi;
-import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.io.IOException;
+import org.springframework.context.annotation.DependsOn;
 
 @Configuration
 public class AppConfig {
@@ -21,16 +20,14 @@ public class AppConfig {
 
     @Bean
     @Qualifier("spotifyApi")
-    public SpotifyApi getSpotifyApi() {
-        try {
-            SpotifyApi spotifyApi = new SpotifyApi.Builder().setClientId(clientId).setClientSecret(clientSecret).build();
-            ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials().build();
-            spotifyApi.setAccessToken(clientCredentialsRequest.execute().getAccessToken());
-            return spotifyApi;
-        } catch (IOException | SpotifyWebApiException e) {
-            e.printStackTrace();
-            System.out.println("Error: " + e.getMessage());
-        }
-        return null;
+    public SpotifyApi spotifyApi() {
+        return new SpotifyApi.Builder().setClientId(clientId).setClientSecret(clientSecret).build();
+    }
+
+    @Bean
+    @DependsOn("spotifyApi")
+    @Qualifier("clientCredentialsRequest")
+    public ClientCredentialsRequest clientCredentialsRequest() throws SpotifyApiException {
+        return spotifyApi().clientCredentials().build();
     }
 }
