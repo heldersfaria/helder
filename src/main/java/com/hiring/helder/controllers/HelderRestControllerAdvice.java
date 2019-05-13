@@ -23,13 +23,13 @@ public class HelderRestControllerAdvice {
     }
 
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler({BindException.class, ConversionFailedException.class, IllegalArgumentException.class, VendaSemDiscoException.class, CashBackException.class})
+    @ExceptionHandler({BindException.class, ConversionFailedException.class, IllegalArgumentException.class, VendaSemDiscoException.class, VendaComDiscoVinilInvalidoException.class})
     public void handleValidationExceptions(final HttpServletRequest req, final Exception e) {
         logError(req, e);
     }
 
     @ResponseStatus(NOT_FOUND)
-    @ExceptionHandler({DiscoVinilNaoEncontradoException.class, VendaNaoEncontradaException.class})
+    @ExceptionHandler({DiscoVinilNaoEncontradoException.class, VendaNaoEncontradaException.class, CashBackException.class})
     public void handleValidationExceptionsForNotFound(final HttpServletRequest req, final Exception e) {
         logError(req, e);
     }

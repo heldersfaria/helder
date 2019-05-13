@@ -1,24 +1,24 @@
 package com.hiring.helder.exceptions;
 
 
-public class HelderApplicationException extends Exception {
+public class VendaComDiscoVinilInvalidoException extends Exception {
 
     private static final long serialVersionUID = 904049274547762569L;
 
-    public HelderApplicationException() {
+    public VendaComDiscoVinilInvalidoException() {
     }
 
     /**
      * @param message
      */
-    public HelderApplicationException(String message) {
+    public VendaComDiscoVinilInvalidoException(String message) {
         super(message);
     }
 
     /**
      * @param cause
      */
-    public HelderApplicationException(Throwable cause) {
+    public VendaComDiscoVinilInvalidoException(Throwable cause) {
         super(cause);
     }
 
@@ -26,7 +26,7 @@ public class HelderApplicationException extends Exception {
      * @param message
      * @param cause
      */
-    public HelderApplicationException(String message, Throwable cause) {
+    public VendaComDiscoVinilInvalidoException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -36,8 +36,8 @@ public class HelderApplicationException extends Exception {
      * @param enableSuppression
      * @param writableStackTrace
      */
-    public HelderApplicationException(String message, Throwable cause, boolean enableSuppression,
-                                      boolean writableStackTrace) {
+    public VendaComDiscoVinilInvalidoException(String message, Throwable cause, boolean enableSuppression,
+                                               boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

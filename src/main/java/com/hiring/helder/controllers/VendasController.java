@@ -1,10 +1,7 @@
 package com.hiring.helder.controllers;
 
 import com.hiring.helder.Resources.VendaResource;
-import com.hiring.helder.exceptions.CashBackException;
-import com.hiring.helder.exceptions.DiscoVinilNaoEncontradoException;
-import com.hiring.helder.exceptions.VendaNaoEncontradaException;
-import com.hiring.helder.exceptions.VendaSemDiscoException;
+import com.hiring.helder.exceptions.*;
 import com.hiring.helder.models.Venda;
 import com.hiring.helder.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +40,7 @@ public class VendasController {
     }
 
     @PostMapping
-    public ResponseEntity<Venda> criarVenda(@RequestBody VendaResource venda) throws VendaSemDiscoException, CashBackException, DiscoVinilNaoEncontradoException {
+    public ResponseEntity<Venda> criarVenda(@RequestBody VendaResource venda) throws VendaSemDiscoException, CashBackException, VendaComDiscoVinilInvalidoException {
         return new ResponseEntity<Venda>(vendaService.processarVenda(venda), OK);
     }
 }

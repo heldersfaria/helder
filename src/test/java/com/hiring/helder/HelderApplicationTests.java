@@ -11,8 +11,8 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class HelderApplicationTests {
-	@Test
-	public void contextLoads() {
-		assertTrue(HelderApplication.class.isAnnotationPresent(SpringBootApplication.class));
-	}
+    @Test
+    public void contextLoads() {
+        assertTrue(HelderApplication.class.isAnnotationPresent(SpringBootApplication.class));
+    }
 }

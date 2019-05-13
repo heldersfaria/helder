@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.hiring.helder.constants.StringConstants.*;
 import static com.hiring.helder.enums.GenerosEnum.POP;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,20 +38,10 @@ public class DiscosControllerTest {
     @MockBean
     private DiscoVinilService discoVinilService;
 
-    public static final String NAOEXISTE = "naoexiste";
-    public static final String PAGE = "page";
-    public static final String SIZE = "size";
-    public static final String GENERO = "genero";
-
-
-
     private static final String URL_ID = "/discos/%s";
-
     private static final String URL = "/discos";
 
-    private String payload;
-
-    private String listPayload;
+    private String payload, listPayload;
 
     private DiscoVinil discoPop, discoPop2, discoRock;
 
@@ -70,13 +61,16 @@ public class DiscosControllerTest {
     @Test
     public void findByIdComSucesso() throws Exception {
         when(discoVinilService.findById(discoPop.getId())).thenReturn(discoPop);
-        mockMvc.perform(get(String.format(URL_ID, discoPop.getId()))).andExpect(status().isOk()).andExpect(content().json(payload));
+        mockMvc.perform(get(String.format(URL_ID, discoPop.getId())))
+                .andExpect(status().isOk())
+                .andExpect(content().json(payload));
     }
 
     @Test
     public void findByIdWithoutSuccess() throws Exception {
         when(discoVinilService.findById(NAOEXISTE)).thenThrow(new DiscoVinilNaoEncontradoException());
-        mockMvc.perform(get(String.format(URL_ID, NAOEXISTE))).andExpect(status().isNotFound());
+        mockMvc.perform(get(String.format(URL_ID, NAOEXISTE)))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -88,8 +82,9 @@ public class DiscosControllerTest {
         mockMvc.perform(get(String.format(URL))
                 .param(GENERO, POP.getNome())
                 .param(PAGE, "1")
-                .param(SIZE, "50")).andExpect(status().isOk()).andExpect(content().json(listPayload));
-
+                .param(SIZE, "50"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(listPayload));
     }
 
     @Test
@@ -101,6 +96,7 @@ public class DiscosControllerTest {
         mockMvc.perform(get(String.format(URL))
                 .param(PAGE, "1")
                 .param(SIZE, "50"))
-                .andExpect(status().isOk()).andExpect(content().json(listPayload));
+                .andExpect(status().isOk())
+                .andExpect(content().json(listPayload));
     }
 }

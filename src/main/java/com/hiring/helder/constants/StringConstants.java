@@ -31,4 +31,10 @@ public final class StringConstants {
     public static final String GENERO = "genero";
 
     public static final String DATE_FORMAT = "dd-MM-yyyy";
+
+    public static final String DATA_INICIAL = "dataInicial";
+
+    public static final String DATA_FINAL = "dataFinal";
+
+    public static final String APPLICATION_JSON_CHARSET_UTF_8 = "application/json;charset=UTF-8";
 }

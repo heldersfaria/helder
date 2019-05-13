@@ -1,23 +1,35 @@
 package com.hiring.helder.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.hiring.helder.constants.StringConstants;
+import com.google.gson.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+
+import static com.hiring.helder.constants.StringConstants.DATE_FORMAT;
+import static com.hiring.helder.utils.Formatador.converterLocalDateTtoJsonElement;
+import static com.hiring.helder.utils.Formatador.converterStringToLocalDate;
 
 
 public final class TestUtils {
 
 
-    public static final Gson GSON = new GsonBuilder().setDateFormat(StringConstants.DATE_FORMAT).create();
+    public static final Gson GSON = new GsonBuilder().setDateFormat(DATE_FORMAT).registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+        @Override
+        public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+                throws JsonParseException {
+            return converterStringToLocalDate(json.getAsString());
+        }
+    }).registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
+        @Override
+        public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
+            return converterLocalDateTtoJsonElement(src);
+        }
+
+    }).create();
 
 
     public String readFromResources(String fileName) {
@@ -42,5 +54,9 @@ public final class TestUtils {
 
     public <T> T readFromResourcesFromPayload(Class<T> entity, String payload) {
         return GSON.fromJson(payload, entity);
+    }
+
+    public <T> String readFromEntity(T entity) {
+        return GSON.toJson(entity);
     }
 }

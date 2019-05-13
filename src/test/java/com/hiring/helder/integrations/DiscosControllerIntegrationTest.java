@@ -12,10 +12,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.hiring.helder.constants.StringConstants.NAOEXISTE;
-import static com.hiring.helder.constants.StringConstants.PAGE;
-import static com.hiring.helder.controllers.DiscosControllerTest.GENERO;
-import static com.hiring.helder.controllers.DiscosControllerTest.SIZE;
+import static com.hiring.helder.constants.StringConstants.*;
 import static com.hiring.helder.enums.GenerosEnum.POP;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -30,7 +27,6 @@ public class DiscosControllerIntegrationTest {
     private MockMvc mockMvc;
 
     private static final String URL_ID = "/discos/%s";
-
     private static final String URL = "/discos";
 
     private DiscoVinil discoPop;
@@ -44,7 +40,7 @@ public class DiscosControllerIntegrationTest {
     public void findByIdComSucesso() throws Exception {
         mockMvc.perform(get(String.format(URL_ID, discoPop.getId())))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType(APPLICATION_JSON_CHARSET_UTF_8))
                 .andExpect(jsonPath("$.id").value(discoPop.getId()));
         ;
     }
@@ -62,7 +58,7 @@ public class DiscosControllerIntegrationTest {
                 .param(PAGE, "1")
                 .param(SIZE, "50"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType(APPLICATION_JSON_CHARSET_UTF_8))
                 .andExpect(jsonPath("[*]").isNotEmpty());
     }
 
@@ -73,7 +69,7 @@ public class DiscosControllerIntegrationTest {
                 .param(PAGE, "1")
                 .param(SIZE, "50"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType(APPLICATION_JSON_CHARSET_UTF_8))
                 .andExpect(jsonPath("[*]").isNotEmpty());
     }
 }

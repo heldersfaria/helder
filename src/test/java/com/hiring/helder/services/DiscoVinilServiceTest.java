@@ -85,6 +85,7 @@ public class DiscoVinilServiceTest {
         verify(discoVinilRepository, times(1)).save(discoVinil);
     }
 
+    @Test
     public void hasDataTrue() {
         when(discoVinilRepository.count()).thenReturn(1L);
 

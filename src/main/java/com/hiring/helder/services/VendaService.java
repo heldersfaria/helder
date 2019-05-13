@@ -2,10 +2,7 @@ package com.hiring.helder.services;
 
 import com.hiring.helder.Repositories.VendaRepository;
 import com.hiring.helder.Resources.VendaResource;
-import com.hiring.helder.exceptions.CashBackException;
-import com.hiring.helder.exceptions.DiscoVinilNaoEncontradoException;
-import com.hiring.helder.exceptions.VendaNaoEncontradaException;
-import com.hiring.helder.exceptions.VendaSemDiscoException;
+import com.hiring.helder.exceptions.*;
 import com.hiring.helder.models.DiscoCashBack;
 import com.hiring.helder.models.DiscoVinil;
 import com.hiring.helder.models.Venda;
@@ -53,7 +50,7 @@ public class VendaService {
         return vendaRepository.findByDataBetween(dateInicial, dateFinal, pageRequest);
     }
 
-    public Venda processarVenda(VendaResource vendaResource) throws VendaSemDiscoException, CashBackException, DiscoVinilNaoEncontradoException {
+    public Venda processarVenda(VendaResource vendaResource) throws VendaSemDiscoException, CashBackException, VendaComDiscoVinilInvalidoException {
 
         List<DiscoVinil> discos = vendaResource.getDiscos();
 
@@ -63,11 +60,16 @@ public class VendaService {
 
             List<DiscoCashBack> listaDiscosWithCashBack = new ArrayList<DiscoCashBack>();
 
-            int dia = now().getDayOfWeek().getValue() -1;
+            int dia = now().getDayOfWeek().getValue() - 1;
 
             for (DiscoVinil disco : discos) {
 
-                DiscoVinil discoFromDatabase = discoVinilService.findById(disco.getId());
+                DiscoVinil discoFromDatabase = null;
+                try {
+                    discoFromDatabase = discoVinilService.findById(disco.getId());
+                } catch (DiscoVinilNaoEncontradoException e) {
+                    throw new VendaComDiscoVinilInvalidoException("Disco não existe: " + disco.getId() + " " + disco.getNome(), e.getCause());
+                }
 
                 Double descontoDoDia = cashBackService.findById(disco.getGenero()).getDescontos().get(dia);
 

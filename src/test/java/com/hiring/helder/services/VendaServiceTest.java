@@ -81,9 +81,9 @@ public class VendaServiceTest {
         Venda venda2 = getVenda();
         venda2.setData(hoje.plusDays(3));
 
-        List<Venda> discos = Arrays.asList(venda, venda2);
+        List<Venda> vendas = Arrays.asList(venda, venda2);
 
-        when(vendaRepository.findByDataBetween(ontem, amanha, pageRequest)).thenReturn(discos);
+        when(vendaRepository.findByDataBetween(ontem, amanha, pageRequest)).thenReturn(vendas);
 
         List<Venda> vendasRetorno = vendaService.find(ontem, amanha, page, size);
 
