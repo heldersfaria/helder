@@ -15,9 +15,20 @@ public final class StringConstants {
     public static final String qArtist = "artist:";
 
     public static final String NOME = "nome";
+
     public static final String DATA = "data";
 
     public static final String ID = "id";
 
     public static final String DUMMY = "dummy";
+
+    public static final String NAOEXISTE = "naoexiste";
+
+    public static final String PAGE = "page";
+
+    public static final String SIZE = "size";
+
+    public static final String GENERO = "genero";
+
+    public static final String DATE_FORMAT = "dd-MM-yyyy";
 }

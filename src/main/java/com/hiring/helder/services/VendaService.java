@@ -3,8 +3,9 @@ package com.hiring.helder.services;
 import com.hiring.helder.Repositories.VendaRepository;
 import com.hiring.helder.Resources.VendaResource;
 import com.hiring.helder.exceptions.CashBackException;
-import com.hiring.helder.exceptions.DiscoVinilException;
-import com.hiring.helder.exceptions.VendaException;
+import com.hiring.helder.exceptions.DiscoVinilNaoEncontradoException;
+import com.hiring.helder.exceptions.VendaNaoEncontradaException;
+import com.hiring.helder.exceptions.VendaSemDiscoException;
 import com.hiring.helder.models.DiscoCashBack;
 import com.hiring.helder.models.DiscoVinil;
 import com.hiring.helder.models.Venda;
@@ -38,12 +39,12 @@ public class VendaService {
     @Autowired
     private DiscoCashBackService discoCashBackService;
 
-    public Venda findById(String id) throws VendaException {
+    public Venda findById(String id) throws VendaNaoEncontradaException {
 
         try {
             return vendaRepository.findById(id).get();
         } catch (Exception e) {
-            throw new VendaException("Venda não encontrada.", e);
+            throw new VendaNaoEncontradaException("Venda não encontrada.", e);
         }
     }
 
@@ -52,7 +53,7 @@ public class VendaService {
         return vendaRepository.findByDataBetween(dateInicial, dateFinal, pageRequest);
     }
 
-    public Venda processarVenda(VendaResource vendaResource) throws VendaException, CashBackException, DiscoVinilException {
+    public Venda processarVenda(VendaResource vendaResource) throws VendaSemDiscoException, CashBackException, DiscoVinilNaoEncontradoException {
 
         List<DiscoVinil> discos = vendaResource.getDiscos();
 
@@ -62,7 +63,7 @@ public class VendaService {
 
             List<DiscoCashBack> listaDiscosWithCashBack = new ArrayList<DiscoCashBack>();
 
-            int dia = now().getDayOfWeek().getValue();
+            int dia = now().getDayOfWeek().getValue() -1;
 
             for (DiscoVinil disco : discos) {
 
@@ -90,7 +91,7 @@ public class VendaService {
             return save(formatarDouble(valorTotalCashBack), listaDiscosWithCashBack);
         }
 
-        throw new VendaException("Toda venda tem que possuir um disco");
+        throw new VendaSemDiscoException("Toda venda tem que possuir um disco");
     }
 
     private Venda save(Double valorTotalCashBack, List<DiscoCashBack> listaDiscosWithCashBack) {

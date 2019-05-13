@@ -4,15 +4,14 @@ HELDER SILVA DE FARIA
 
 
 
-O desenvolvimento do desafio foi utilizando o Ubuntu 18.10. 
-
-Para a configuração do ambiente eu precisei rodar o script de instalação de nome montagem-ambiente.sh.
+O desenvolvimento do desafio foi utilizando o Ubuntu 18.10 e para configurar o meu ambiente usei o script
+install-dev-machine.sh, porém usar o script montagem-ambiente.sh já é o suficiente.
 
 A aplicação foi feita no Intellij usando Springboot, Lombok, Mongodb, Docker e Docker-compose. 
 
 Se caso queira rodar a aplicação pelo intellij e realizar modificações é preciso baixar o plugin do Lombok
-(https://projectlombok.org/setup/intellij) e usa-lo no Intellij para que desse modo a IDE reconheça algumas 
-partes do codigo.
+(https://projectlombok.org/setup/intellij) e usa-lo no Intellij para que desse modo a IDE reconheça os metodos
+get/set.
 
 Há 2 formas de executar a aplicação:
 
@@ -21,13 +20,12 @@ Há 2 formas de executar a aplicação:
 
 Caso haja necessidade de executar somente os testes lembre-se de conferir se o contenainer referente ao mongodb esta
 rodando. Se preciso pode executar o script /docker/start-mongodb.sh.
-  
+
+Não sei se a expectativa fosse que houvesse um endpoint para extração dos dados do facebook. No meu entendimento eu
+coloquei em uma rotina que é executada logo depois que os componentes spring são inicializados.
+
 Com o intuito de ajudar com a executação dos testes eu deixei no repositorio uma colection do POSTMAN
 com alguns dos testes realizados por mim.
   
-O projeto possui uma pasta docker na sua raiz, lá possui dois arquivos para a criação do container do mongodb:
-docker-compose.yml e start-mongodb.sh.
-
-Foi feito uma tentativa, porém sem sucesso de subir a aplicação em um container e o Mongodb em outro.
-Hoje eu não sei o motivo, mas o container da aplicação não esta comunicando com o Mongodb. Esse foi um dos 
-exemplos que eu segui https://github.com/aritnag/spring-boot-mongo-kubernetes-docker/blob/master/docker-compose.yml
+O projeto possui uma pasta docker na sua raiz, lá possui dois arquivos para a criação dos containeres do mongodb de
+execução e de teste: docker-compose.yml e start-mongodb.sh.

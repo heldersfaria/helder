@@ -1,6 +1,6 @@
 package com.hiring.helder.controllers;
 
-import com.hiring.helder.exceptions.DiscoVinilException;
+import com.hiring.helder.exceptions.DiscoVinilNaoEncontradoException;
 import com.hiring.helder.models.DiscoVinil;
 import com.hiring.helder.services.DiscoVinilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class DiscosController {
     }
 
     @GetMapping("/discos/{id}")
-    public ResponseEntity<DiscoVinil> findById(@PathVariable("id") String id) throws DiscoVinilException {
+    public ResponseEntity<DiscoVinil> findById(@PathVariable("id") String id) throws DiscoVinilNaoEncontradoException {
         return new ResponseEntity<DiscoVinil>(discoVinilService.findById(id), OK);
     }
 }

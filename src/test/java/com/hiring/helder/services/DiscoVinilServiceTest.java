@@ -2,7 +2,7 @@ package com.hiring.helder.services;
 
 
 import com.hiring.helder.Repositories.DiscoVinilRepository;
-import com.hiring.helder.exceptions.DiscoVinilException;
+import com.hiring.helder.exceptions.DiscoVinilNaoEncontradoException;
 import com.hiring.helder.models.DiscoVinil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,7 +52,7 @@ public class DiscoVinilServiceTest {
     }
 
     @Test
-    public void findByIdWithSucess() throws DiscoVinilException {
+    public void findByIdWithSucess() throws DiscoVinilNaoEncontradoException {
 
         when(discoVinilRepository.findById(ID)).thenReturn(Optional.of(discoVinil));
 
@@ -64,8 +64,8 @@ public class DiscoVinilServiceTest {
         verify(discoVinilRepository, times(1)).findById(ID);
     }
 
-    @Test(expected = DiscoVinilException.class)
-    public void findByIdWithFailure() throws DiscoVinilException {
+    @Test(expected = DiscoVinilNaoEncontradoException.class)
+    public void findByIdWithFailure() throws DiscoVinilNaoEncontradoException {
         when(discoVinilRepository.findById(DUMMY)).thenThrow(IllegalArgumentException.class);
 
         discoVinilService.findById(ID);

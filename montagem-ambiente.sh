@@ -70,3 +70,11 @@
 	sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://github.com/docker/compose/releases/latest | egrep -o '[0-9]+.[0-9]+.[0-9]+')/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 	sudo chmod +x /usr/local/bin/docker-compose
 
+	# IntelliJ IDEA
+    wget https://download.jetbrains.com/idea/ideaIC-2018.3.2.tar.gz
+    sudo rm -Rf /opt/idea-IC-*/
+    sudo tar -xvf ideaIC-* -C /opt/
+    /opt/idea-IC-*/bin/idea.sh &
+    rm ideaIC-*.tar.gz
+
+

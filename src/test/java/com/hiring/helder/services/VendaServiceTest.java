@@ -2,7 +2,7 @@ package com.hiring.helder.services;
 
 
 import com.hiring.helder.Repositories.VendaRepository;
-import com.hiring.helder.exceptions.VendaException;
+import com.hiring.helder.exceptions.VendaNaoEncontradaException;
 import com.hiring.helder.models.Venda;
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +51,7 @@ public class VendaServiceTest {
     }
 
     @Test
-    public void findByIdWithSucess() throws VendaException {
+    public void findByIdWithSucess() throws VendaNaoEncontradaException {
         when(vendaRepository.findById(ID)).thenReturn(Optional.of(venda));
         Venda retorno = vendaService.findById(ID);
 
@@ -61,8 +61,8 @@ public class VendaServiceTest {
         verify(vendaRepository, times(1)).findById(ID);
     }
 
-    @Test(expected = VendaException.class)
-    public void findByIdWithFailure() throws VendaException {
+    @Test(expected = VendaNaoEncontradaException.class)
+    public void findByIdWithFailure() throws VendaNaoEncontradaException {
         when(vendaRepository.findById(DUMMY)).thenThrow(IllegalArgumentException.class);
 
         vendaService.findById(ID);
@@ -78,9 +78,8 @@ public class VendaServiceTest {
 
         venda.setData(hoje);
 
-        Venda venda2 =  getVenda();
+        Venda venda2 = getVenda();
         venda2.setData(hoje.plusDays(3));
-
 
         List<Venda> discos = Arrays.asList(venda, venda2);
 

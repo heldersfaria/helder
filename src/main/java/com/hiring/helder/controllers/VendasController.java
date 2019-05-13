@@ -2,8 +2,9 @@ package com.hiring.helder.controllers;
 
 import com.hiring.helder.Resources.VendaResource;
 import com.hiring.helder.exceptions.CashBackException;
-import com.hiring.helder.exceptions.DiscoVinilException;
-import com.hiring.helder.exceptions.VendaException;
+import com.hiring.helder.exceptions.DiscoVinilNaoEncontradoException;
+import com.hiring.helder.exceptions.VendaNaoEncontradaException;
+import com.hiring.helder.exceptions.VendaSemDiscoException;
 import com.hiring.helder.models.Venda;
 import com.hiring.helder.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,13 @@ public class VendasController {
     }
 
     @GetMapping(value = "/vendas/{id}")
-    public ResponseEntity<Venda> findById(@PathVariable("id") String id) throws VendaException {
+    public ResponseEntity<Venda> findById(@PathVariable("id") String id) throws VendaNaoEncontradaException {
         Venda venda = vendaService.findById(id);
         return new ResponseEntity<Venda>(venda, OK);
     }
 
     @PostMapping
-    public ResponseEntity<Venda> criarVenda(@RequestBody VendaResource venda) throws VendaException, CashBackException, DiscoVinilException {
+    public ResponseEntity<Venda> criarVenda(@RequestBody VendaResource venda) throws VendaSemDiscoException, CashBackException, DiscoVinilNaoEncontradoException {
         return new ResponseEntity<Venda>(vendaService.processarVenda(venda), OK);
     }
 }

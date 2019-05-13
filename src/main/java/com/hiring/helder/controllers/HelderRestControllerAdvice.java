@@ -1,12 +1,8 @@
 package com.hiring.helder.controllers;
 
-import com.hiring.helder.exceptions.CashBackException;
-import com.hiring.helder.exceptions.DiscoException;
-import com.hiring.helder.exceptions.DiscoVinilException;
-import com.hiring.helder.exceptions.VendaException;
+import com.hiring.helder.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.convert.ConversionFailedException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,8 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
 @RestControllerAdvice(basePackages = {"com.hiring.helder"})
@@ -28,8 +23,14 @@ public class HelderRestControllerAdvice {
     }
 
     @ResponseStatus(BAD_REQUEST)
-    @ExceptionHandler({BindException.class, ConversionFailedException.class, IllegalArgumentException.class, VendaException.class, DiscoVinilException.class, CashBackException.class})
+    @ExceptionHandler({BindException.class, ConversionFailedException.class, IllegalArgumentException.class, VendaSemDiscoException.class, CashBackException.class})
     public void handleValidationExceptions(final HttpServletRequest req, final Exception e) {
+        logError(req, e);
+    }
+
+    @ResponseStatus(NOT_FOUND)
+    @ExceptionHandler({DiscoVinilNaoEncontradoException.class, VendaNaoEncontradaException.class})
+    public void handleValidationExceptionsForNotFound(final HttpServletRequest req, final Exception e) {
         logError(req, e);
     }
 

@@ -1,24 +1,23 @@
 package com.hiring.helder.exceptions;
 
-
-public class DiscoVinilException extends Exception {
+public class VendaNaoEncontradaException extends Exception {
 
     private static final long serialVersionUID = 904049274547762569L;
 
-    public DiscoVinilException() {
+    public VendaNaoEncontradaException() {
     }
 
     /**
      * @param message
      */
-    public DiscoVinilException(String message) {
+    public VendaNaoEncontradaException(String message) {
         super(message);
     }
 
     /**
      * @param cause
      */
-    public DiscoVinilException(Throwable cause) {
+    public VendaNaoEncontradaException(Throwable cause) {
         super(cause);
     }
 
@@ -26,7 +25,7 @@ public class DiscoVinilException extends Exception {
      * @param message
      * @param cause
      */
-    public DiscoVinilException(String message, Throwable cause) {
+    public VendaNaoEncontradaException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -36,8 +35,8 @@ public class DiscoVinilException extends Exception {
      * @param enableSuppression
      * @param writableStackTrace
      */
-    public DiscoVinilException(String message, Throwable cause, boolean enableSuppression,
-                               boolean writableStackTrace) {
+    public VendaNaoEncontradaException(String message, Throwable cause, boolean enableSuppression,
+                          boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

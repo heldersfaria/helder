@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Document(collection = "disco")
+@Document(collection = "Disco")
 public class DiscoCashBack extends Disco {
 
     private Double valorComCashBack;

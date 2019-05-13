@@ -5,3 +5,8 @@ services:
     ports:
       - 27017:27017
     command: --smallfiles
+  mongo2:
+    image: mongo
+    ports:
+      - 27018:27017
+    command: --smallfiles
